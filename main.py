@@ -11,4 +11,8 @@ db = mysql.connector.connect(
    database = "phone_directory"
 )
 
-print(db)
+dbCursorObject = db.cursor()
+createTable = """CREATE TABLE phone_numbers (name varchar(100) NOT NULL, number INT NOT NULL)"""
+dbCursorObject.execute(createTable)
+
+db.close()
