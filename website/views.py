@@ -4,6 +4,8 @@ views = Blueprint('views',__name__)
 
 @views.route('/')
 def home():
+    from website.database import search
+    print(search(["address"],["name"],["Daniel Lew"]))
     return render_template("home.html")
 
 @views.route('/add-person', methods=['GET','POST'])
@@ -21,6 +23,9 @@ def add_person():
         
     return render_template("add_person.html")
 
-@views.route('/search')
+@views.route('/search', methods=['GET','POST'])
 def search_by_name():
+    if request.method == 'POST':
+        from website.database import search
+        request.form.get()
     return render_template("search.html")

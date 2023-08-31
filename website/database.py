@@ -50,5 +50,6 @@ def search(table,columns,filters):
             sql += "%s.%s = '%s'" % (table[i],columns[i],filters[i])
         else:
             sql += " AND %s.%s = '%s'" % (table[i],columns[i],filters[i])
+    # print(sql)
     cursor_object.execute(sql)
     return cursor_object.fetchall()

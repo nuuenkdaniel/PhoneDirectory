@@ -3,15 +3,27 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
+<script src="../static/search.js"></script>
 <form method="GET">
     <h3 align="center">Search</h3>
-    <select align="center" class="form-select form-select-lg mb-3" size="4" multiple>
-        <option value="name">name</option>
-        <option value="address">address</option>
-        <option value="email">email</option>
-        <option value="phone-number">phone number</option>
-    </select>
+    <div id="filterOptions" class="btn-group" role="group">
+        <input type="checkbox" class="btn-check" id="name-filter" checked autocomplete="off">
+        <label class="btn btn-outline-primary" for="name-filter">Name</label>
+        <input type="checkbox" class="btn-check" id="email-filter" autocomplete="off">
+        <label class="btn btn-outline-primary" for="email-filter">Email</label>
+        <input type="checkbox" class="btn-check" id="number-filter" autocomplete="off">
+        <label class="btn btn-outline-primary" for="number-filter">Phone Number</label>
+        <input type="checkbox" class="btn-check" id="address-filter" autocomplete="off">
+        <label class="btn btn-outline-primary" for="address-filter">Address</label>
+    </div>
+    <div id="search-fields" class="form-group">
+        <div id="name-field">
+            <label for="name">Name*</label>
+            <input id="name" type="text" class="form-control" placeholder="Enter a name" required>
+        </div>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-<div id="name-field">
 </div>
 {% endblock %}
