@@ -4,7 +4,7 @@
 
 {% block content %}
 <form method="POST">
-    <h3 align="center">Add Person</h3>
+    <h3 class="text-center">Add Person</h3>
     <div class="form-group">
         <label for="name">Name*</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Enter a name" required/>
@@ -19,7 +19,7 @@
         <label for="state">State</label>
         <input type="text" class="form-control" id="state" name="state" placeholder="Enter the state"/>
         <label for="zip">Zip</label>
-        <input type="text" class="form-control" id="zip" name="zip" placeholder="Enter the zipcode"/>
+        <input type="number" class="form-control" id="zip" name="zip" placeholder="Enter the zipcode"/>
     </div>
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>
