@@ -5,7 +5,7 @@ views = Blueprint("views",__name__)
 @views.route('/')
 def home():
     from website.database import search
-    # print(search(["address"],["name"],["Daniel Lew"]))
+    
     return render_template("home.html")
 
 @views.route("/add-person", methods=["GET","POST"])
