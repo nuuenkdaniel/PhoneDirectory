@@ -42,7 +42,8 @@ def create_tables():
     tables['info'] = (
         "CREATE TABLE `info` ("
         "   `id` int(10) NOT NULL AUTO_INCREMENT,"
-        "   `name` varchar(255),"
+        "   `first_name` varchar(255),"
+        "   `last_name` varchar(255),"
         "   `notes` varchar(255),"
         "   PRIMARY KEY(id)"
         ")"
@@ -73,7 +74,7 @@ except mysql.connector.Error as err:
         exit(1)
 
 
-def add_person(name,phone_number,street_address,city,state,zip,email):
+def add_person(first_name,last_name,phone_number,street_address,city,state,zip,email):
     try:
         cursor_object = db.cursor()
         sql = "INSERT INTO contact_info (phone_number,email)\
@@ -94,9 +95,9 @@ def add_person(name,phone_number,street_address,city,state,zip,email):
         print(err)
         print("2")
     try:
-        sql = "INSERT INTO info (name)\
-            VALUES (%s)"
-        values = (name)
+        sql = "INSERT INTO info (first_name,last_name)\
+            VALUES (%s,%s)"
+        values = (first_name,last_name)
         cursor_object.execute(sql,values)
         db.commit()
     except err:
