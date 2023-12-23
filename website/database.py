@@ -7,7 +7,7 @@ with open("config.json","r") as config:
 
 db = mysql.connector.connect(
    host = "localhost",
-   user = "root",
+   user = "Danuu",
    passwd = dbPassword,
 )
 
