@@ -1,22 +1,23 @@
-import mysql.connector
-from mysql.connector import errorcode
+import mariadb
+import sys
 import json 
 
 with open("config.json","r") as config:
     dbPassword = (json.load(config)["dbPass"])
 
-db = mysql.connector.connect(
-   host = "localhost",
-   user = "Danuu",
+db = mariadb.connect(
+   user = "root",
    passwd = dbPassword,
+   host = "localhost"
 )
 
 def create_database():
     cursor_object = db.cursor()
     try:
         cursor_object.execute("CREATE DATABASE phone_directory DEFAULT CHARACTER SET 'utf8'")
-    except mysql.connector.Error as err:
+    except mariadb.Error as err:
         print("Database could not be created: {}".format(err))
+        sys.exit(1)
 
 def create_tables():
     cursor_object = db.cursor()
@@ -53,7 +54,7 @@ def create_tables():
         try:
             print("Creating table {}: ".format(table_name), end='')
             cursor_object.execute(table_description)
-        except mysql.connector.Error as err:
+        except mariadb.Error as err:
             if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
                 print("already exists")
             else:
@@ -65,7 +66,7 @@ try:
     cursor_object = db.cursor()
     cursor_object.execute("USE phone_directory")
     create_tables()
-except mysql.connector.Error as err:
+except mariadb.Error as err:
     if err.errno == errorcode.ER_BAD_DB_ERROR:
         create_database()
         print("database created")
