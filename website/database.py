@@ -6,7 +6,7 @@ with open("config.json","r") as config:
     dbPassword = (json.load(config)["dbPass"])
 
 db = mariadb.connect(
-   user = "root",
+   user = "Danuu",
    passwd = dbPassword,
    host = "localhost"
 )
@@ -55,7 +55,7 @@ def create_tables():
             print("Creating table {}: ".format(table_name), end='')
             cursor_object.execute(table_description)
         except mariadb.Error as err:
-            if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
+            if err:#.errno == errorcode.ER_TABLE_EXISTS_ERROR:
                 print("already exists")
             else:
                 print(err.msg)
@@ -67,7 +67,8 @@ try:
     cursor_object.execute("USE phone_directory")
     create_tables()
 except mariadb.Error as err:
-    if err.errno == errorcode.ER_BAD_DB_ERROR:
+    if err:#.errno == errorcode.ER_BAD_DB_ERROR:
+        
         create_database()
         print("database created")
     else:
