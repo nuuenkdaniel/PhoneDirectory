@@ -1,11 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 
 views = Blueprint("views",__name__)
 
 @views.route('/')
 def home():
-    from website.database import search
-    
     return render_template("home.html")
 
 @views.route("/add-person", methods=["GET","POST"])
@@ -27,17 +25,17 @@ def add_person():
 @views.route("/search", methods=["GET","POST"])
 def search():
     if request.method == "POST":
-        from website.database import search
-        name = request.form.get("name")
-        email = request.form.get("email")
-        phone_number = request.form.get("number")
-        street_address = request.form.get("street-address")
-        city = request.form.get("city")
-        state = request.form.get("state")
-        zipcode = request.form.get("zip")
+        session["search_name"] = request.form.get("name")
+        session["search_email"] = request.form.get("email")
+        session["search_phone_number"] = request.form.get("number")
+        session["search_street_address"] = request.form.get("street-address")
+        session["search_city"] = request.form.get("city")
+        session["search_state"] = request.form.get("state")
+        session["search_zipcode"] = request.form.get("zip")
         return redirect(url_for("views.results"))
     return render_template("search.html")
 
 @views.route("/results")
 def results():
+    print(session["search_name"])
     return render_template("results.html")

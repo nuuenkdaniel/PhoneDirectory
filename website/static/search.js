@@ -5,7 +5,7 @@ $(document).ready(function() {
         if(document.querySelector("#name-filter").checked) {
             html += '<div id="name-field">\
             <label for="name">Name*</label>\
-            <input id="name" type="text" class="form-control" placeholder="Enter a name" required>\
+            <input id="name" type="text" name="name" class="form-control" placeholder="Enter a name" required>\
             </div>';
         }
         else if(document.getElement) {
@@ -15,7 +15,7 @@ $(document).ready(function() {
         if(document.querySelector("#email-filter").checked) {
             html += '<div id="email-field">\
             <label for="email">Email*</label>\
-            <input id="email" type="email" class="form-control" placeholder="Enter an email" required>\
+            <input id="email" type="email" name="email" class="form-control" placeholder="Enter an email" required>\
             </div>'
         }
         else if(document.getElementById("email-field") !== null) {
@@ -25,7 +25,7 @@ $(document).ready(function() {
         if(document.querySelector("#number-filter").checked) {
             html += '<div id="number-field">\
             <label for="number">Phone Number*</label>\
-            <input id="number" type="tel" class="form-control" placeholder="Enter a phone number" required>\
+            <input id="number" type="tel" name="number" class="form-control" placeholder="Enter a phone number" required>\
             </div>'
         }
         else if(document.getElementById("number-field") !== null) {
@@ -35,13 +35,13 @@ $(document).ready(function() {
         if(document.querySelector("#address-filter").checked) {
             html += '<div id="address-field">\
             <label for="street-address">Street Address*</label>\
-            <input id="street-address" type="text" class="form-control" placeholder="Enter the street address" required>\
+            <input id="street-address" type="text" name="street-address" class="form-control" placeholder="Enter the street address" required>\
             <label for="city">City*</label>\
-            <input id="city" type="text" class="form-control" placeholder="Enter the city" required>\
+            <input id="city" type="text" name="city" class="form-control" placeholder="Enter the city" required>\
             <label for="state">State*</label>\
-            <input id="state" type="text" class="form-control" placeholder="Enter the state" required>\
+            <input id="state" type="text" name="state" class="form-control" placeholder="Enter the state" required>\
             <label for="zip">Zip*</label>\
-            <input id="zip" type="number" class="form-control" placeholder="Enter the zipcode" required>\
+            <input id="zip" type="number" name="zip" class="form-control" placeholder="Enter the zipcode" required>\
             </div>'
         }
         else if(document.getElementById("address-field") !== null) {

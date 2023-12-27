@@ -5,11 +5,15 @@ import json
 with open("config.json","r") as config:
     dbPassword = (json.load(config)["dbPass"])
 
-db = mariadb.connect(
-   user = "Danuu",
-   passwd = dbPassword,
-   host = "localhost"
-)
+try: 
+    db = mariadb.connect(
+        user = "Danuu",
+        passwd = dbPassword,
+        host = "localhost"
+    )
+except mariadb.Error as err:
+    print("Could not make connection: {}".format(err))
+    sys.exit(1)
 
 def create_database():
     cursor_object = db.cursor()
@@ -65,12 +69,11 @@ def create_tables():
 try:
     cursor_object = db.cursor()
     cursor_object.execute("USE phone_directory")
-    create_tables()
 except mariadb.Error as err:
     if err:#.errno == errorcode.ER_BAD_DB_ERROR:
-        
         create_database()
-        print("database created")
+        create_tables()
+        print("database and tables created")
     else:
         print(err)
         exit(1)

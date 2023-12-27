@@ -4,26 +4,25 @@
 
 {% block content %}
 <script src="../static/search.js"></script>
+<h3 class="text-center">Search</h3>
+<div id="filterOptions" class="btn-group" role="group">
+    <input type="checkbox" class="btn-check" id="name-filter" checked autocomplete="off">
+    <label class="btn btn-outline-primary" for="name-filter">Name</label>
+    <input type="checkbox" class="btn-check" id="email-filter" autocomplete="off">
+    <label class="btn btn-outline-primary" for="email-filter">Email</label>
+    <input type="checkbox" class="btn-check" id="number-filter" autocomplete="off">
+    <label class="btn btn-outline-primary" for="number-filter">Phone Number</label>
+    <input type="checkbox" class="btn-check" id="address-filter" autocomplete="off">
+    <label class="btn btn-outline-primary" for="address-filter">Address</label>
+</div>
 <form method="POST">
-    <h3 class="text-center">Search</h3>
-    <div id="filterOptions" class="btn-group" role="group">
-        <input type="checkbox" class="btn-check" id="name-filter" checked autocomplete="off">
-        <label class="btn btn-outline-primary" for="name-filter">Name</label>
-        <input type="checkbox" class="btn-check" id="email-filter" autocomplete="off">
-        <label class="btn btn-outline-primary" for="email-filter">Email</label>
-        <input type="checkbox" class="btn-check" id="number-filter" autocomplete="off">
-        <label class="btn btn-outline-primary" for="number-filter">Phone Number</label>
-        <input type="checkbox" class="btn-check" id="address-filter" autocomplete="off">
-        <label class="btn btn-outline-primary" for="address-filter">Address</label>
-    </div>
     <div id="search-fields" class="form-group">
         <div id="name-field">
             <label for="name">Name*</label>
-            <input id="name" type="text" class="form-control" placeholder="Enter a name" required>
+            <input id="name" type="text" name="name" class="form-control" placeholder="Enter a name" required>
         </div>
     </div>
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-</div>
 {% endblock %}
