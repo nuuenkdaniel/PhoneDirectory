@@ -121,15 +121,15 @@ def request_data():
 
 def search(table,columns,filters):
     cursor_object = db.cursor()
-    sql = "SELECT phone_numbers.name,phone_numbers.number,emails.email,address.street_address,address.city,address.state,address.zip\
-        FROM phone_numbers\
-        INNER JOIN emails ON phone_numbers.name = emails.name\
-        INNER JOIN address ON phone_numbers.name = address.name WHERE "
+    sql = "SELECT info.first_name,info.last_name,contact_info.phone_number,contact_info.email,address.street_address,address.city,address.state,address.zipcode\
+        FROM info\
+        INNER JOIN contact_info ON info.id = contact_info.id\
+        INNER JOIN address ON contact_info.id = address.id WHERE "
     for i in range(len(columns)):
         if i == 0:
             sql += "%s.%s = '%s'" % (table[i],columns[i],filters[i])
         else:
             sql += " AND %s.%s = '%s'" % (table[i],columns[i],filters[i])
-    # print(sql)
+    print(sql)
     cursor_object.execute(sql)
     return cursor_object.fetchall()

@@ -25,7 +25,8 @@ def add_person():
 @views.route("/search", methods=["GET","POST"])
 def search():
     if request.method == "POST":
-        session["search_name"] = request.form.get("name")
+        session["search_first_name"] = request.form.get("first_name")
+        session["search_last_name"] = request.form.get("last_name")
         session["search_email"] = request.form.get("email")
         session["search_phone_number"] = request.form.get("number")
         session["search_street_address"] = request.form.get("street-address")
@@ -37,5 +38,22 @@ def search():
 
 @views.route("/results")
 def results():
-    print(session["search_name"])
+    from website.database import search
+    table = []
+    columns = []
+    filters = []
+    if session["search_first_name"] != None:
+        table.append("info"); columns.append("first_name"); filters.append(session["search_first_name"])
+        table.append("info"); columns.append("last_name"); filters.append(session["search_last_name"])
+    if session["search_email"] != None:
+        table.append("contact_info"); columns.append("email"); filters.append(session["search_email"])
+    if session["search_phone_number"] != None:
+        table.append("contact_info"); columns.append("phone_number"); filters.append(session["search_phone_number"])
+    if session["search_street_address"] != None:
+        table.append("address"); columns.append("street_address"); filters.append(session["search_street_address"])
+        table.append("address"); columns.append("state"); filters.append(session["search_state"])
+        table.append("address"); columns.append("city"); filters.append(session["search_city"])
+        table.append("address"); columns.append("zipcode"); filters.append(session["search_zipcode"])
+    search(table,columns,filters)
+
     return render_template("results.html")

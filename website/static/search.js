@@ -4,8 +4,10 @@ $(document).ready(function() {
         html = "";
         if(document.querySelector("#name-filter").checked) {
             html += '<div id="name-field">\
-            <label for="name">Name*</label>\
-            <input id="name" type="text" name="name" class="form-control" placeholder="Enter a name" required>\
+            <label for="first_name">Name*</label>\
+            <input id="first_name" type="text" name="first_name" class="form-control" placeholder="Enter a name" required>\
+            <label for="last_name">Last Name*</label>\
+            <input id="last_name" type="text" name="last_name" class="form-control" placeholder="Enter the last name" required>\
             </div>';
         }
         else if(document.getElement) {
