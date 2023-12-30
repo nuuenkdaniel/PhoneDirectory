@@ -3,6 +3,40 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
-<h2>No results found</h2>
+<h3 class="text-center">Results</h3>
+<br>
+{% if data|length > 0 %}
+    <table class="table">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zipcode</th>
+            <th>Actions</th>
+        </tr>
+        {% for result in data %}
+            <tr>
+                {% for column in result %}
+                    {% if column|length > 0 %}
+                        <td>{{ column }}</td>
+                    {% else %}
+                        <td>n/a</td>
+                    {% endif %}
+                {% endfor %}
+                <td>
+                    <a href="">Update</a>
+                    <br>
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <h2>No results found</h2>
+{% endif %}
 <a href="/search" class="btn btn-primary float-left" role="button">back</a>
 {% endblock %}

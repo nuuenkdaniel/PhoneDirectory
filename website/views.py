@@ -54,6 +54,6 @@ def results():
         table.append("address"); columns.append("state"); filters.append(session["search_state"])
         table.append("address"); columns.append("city"); filters.append(session["search_city"])
         table.append("address"); columns.append("zipcode"); filters.append(session["search_zipcode"])
-    search(table,columns,filters)
-
-    return render_template("results.html")
+    data = search(table,columns,filters)
+    print(data)
+    return render_template("results.html",data=data)
