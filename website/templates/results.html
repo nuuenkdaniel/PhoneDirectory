@@ -20,7 +20,7 @@
         </tr>
         {% for result in data %}
             <tr>
-                {% for column in result %}
+                {% for column in result[1:] %}
                     {% if column|length > 0 %}
                         <td>{{ column }}</td>
                     {% else %}
@@ -30,7 +30,7 @@
                 <td>
                     <a href="">Update</a>
                     <br>
-                    <a href="">Delete</a>
+                    <a href="/delete/{{result[0]}}">Delete</a>
                 </td>
             </tr>
         {% endfor %}

@@ -1,5 +1,6 @@
 from flask import Flask
 import json
+import website.database
 
 with open("config.json","r") as config:
     secret_key = (json.load(config)["secret_key"])

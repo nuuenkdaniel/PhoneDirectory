@@ -11,16 +11,18 @@ try:
         passwd = dbPassword,
         host = "localhost"
     )
+    print("Connection to database successful!")
 except mariadb.Error as err:
-    print("Could not make connection: {}".format(err))
+    print(f"Could not make connection: {err}")
     sys.exit(1)
 
 def create_database():
     cursor_object = db.cursor()
     try:
         cursor_object.execute("CREATE DATABASE phone_directory DEFAULT CHARACTER SET 'utf8'")
+        cursor_object.execute("USE phone_directory")
     except mariadb.Error as err:
-        print("Database could not be created: {}".format(err))
+        print(f"Database could not be created: {err}")
         sys.exit(1)
 
 def create_tables():
@@ -56,27 +58,27 @@ def create_tables():
     for table_name in tables:
         table_description = tables[table_name]
         try:
-            print("Creating table {}: ".format(table_name), end='')
+            print(f"Creating table {table_name}: ", end='')
             cursor_object.execute(table_description)
+            print("OK")
         except mariadb.Error as err:
-            if err:#.errno == errorcode.ER_TABLE_EXISTS_ERROR:
+            if err.errno == 1050:
                 print("already exists")
             else:
-                print(err.msg)
-        else:
-            print("OK")
+                print(err)
+                sys.exit(1)
 
 try:
     cursor_object = db.cursor()
     cursor_object.execute("USE phone_directory")
 except mariadb.Error as err:
-    if err:#.errno == errorcode.ER_BAD_DB_ERROR:
+    if err.errno == 1049:
         create_database()
         create_tables()
         print("database and tables created")
     else:
-        print(err)
-        exit(1)
+        print(f"Error: {err}")
+        sys.exit(1)
 
 
 def add_person(first_name,last_name,phone_number,street_address,city,state,zip,email):
@@ -87,7 +89,7 @@ def add_person(first_name,last_name,phone_number,street_address,city,state,zip,e
         values = (phone_number,email)
         cursor_object.execute(sql,values)
         db.commit()
-    except err:
+    except maridb.Error as err:
         print(err)
         print("1")
     try:
@@ -96,7 +98,7 @@ def add_person(first_name,last_name,phone_number,street_address,city,state,zip,e
         values = (street_address,state,city,zip)
         cursor_object.execute(sql,values)
         db.commit()
-    except err:
+    except mariadb.Error as err:
         print(err)
         print("2")
     try:
@@ -105,7 +107,7 @@ def add_person(first_name,last_name,phone_number,street_address,city,state,zip,e
         values = (first_name,last_name)
         cursor_object.execute(sql,values)
         db.commit()
-    except err:
+    except mariadb.Error as err:
         print(err)
         print("3")
     print("added values to tables")
@@ -121,7 +123,7 @@ def request_data():
 
 def search(table,columns,filters):
     cursor_object = db.cursor()
-    sql = "SELECT info.first_name,info.last_name,contact_info.email,contact_info.phone_number,address.street_address,address.city,address.state,address.zipcode\
+    sql = "SELECT info.id,info.first_name,info.last_name,contact_info.email,contact_info.phone_number,address.street_address,address.city,address.state,address.zipcode\
         FROM info\
         INNER JOIN contact_info ON info.id = contact_info.id\
         INNER JOIN address ON contact_info.id = address.id WHERE "
@@ -132,3 +134,13 @@ def search(table,columns,filters):
             sql += " AND %s.%s = '%s'" % (table[i],columns[i],filters[i])
     cursor_object.execute(sql)
     return cursor_object.fetchall()
+
+def delete_data(id):
+    cursor_object = db.cursor()
+    try:
+        sql = f"SELECT CONCAT('DELETE FROM ', table_schema, '.', table_name, ' WHERE id={id};') AS statement FROM information_schema.tables WHERE table_schema = 'phone_directory'"
+        cursor_object.execute(sql)
+        return True
+    except mariadb.Error as err:
+        print(f"Error deleting {id}: {err}")
+        return False

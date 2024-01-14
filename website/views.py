@@ -55,5 +55,12 @@ def results():
         table.append("address"); columns.append("city"); filters.append(session["search_city"])
         table.append("address"); columns.append("zipcode"); filters.append(session["search_zipcode"])
     data = search(table,columns,filters)
-    print(data)
     return render_template("results.html",data=data)
+
+@views.route("/delete/<int:id>")
+def delete(id):
+    from website.database import delete_data
+    if delete_data(id):
+        return redirect(url_for("views.results"))
+    else:
+        return "There was an error deleting"
