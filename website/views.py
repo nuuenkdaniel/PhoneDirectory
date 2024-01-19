@@ -64,3 +64,7 @@ def delete(id):
         return redirect(url_for("views.results"))
     else:
         return "There was an error deleting"
+
+@views.route("/delete/<int:id>")
+def update(id):
+    return render_template("update.html")

@@ -138,7 +138,11 @@ def search(table,columns,filters):
 def delete_data(id):
     cursor_object = db.cursor()
     try:
-        sql = f"SELECT CONCAT('DELETE FROM ', table_schema, '.', table_name, ' WHERE id={id};') AS statement FROM information_schema.tables WHERE table_schema = 'phone_directory'"
+        sql = f"DELETE FROM info WHERE info.id = {id}"
+        cursor_object.execute(sql)
+        sql = f"DELETE FROM address WHERE address.id = {id}"
+        cursor_object.execute(sql)
+        sql = f"DELETE FROM contact_info WHERE contact_info.id = {id}"
         cursor_object.execute(sql)
         return True
     except mariadb.Error as err:
