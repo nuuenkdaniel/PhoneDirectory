@@ -36,7 +36,7 @@ def search():
         return redirect(url_for("views.results"))
     return render_template("search.html")
 
-@views.route("/results")
+@views.route("/results", methods=["GET"])
 def results():
     from website.database import search
     table = []
@@ -65,6 +65,11 @@ def delete(id):
     else:
         return "There was an error deleting"
 
-@views.route("/delete/<int:id>")
-def update(id):
-    return render_template("update.html")
+@views.route("/update/<results>")
+def update(results):
+    person = results[5:-2].split("', '")
+    for i in range(0, len(person)):
+        if(len(person[i]) == 0):
+            person[i] = "n/a"
+    print(person)
+    return render_template("update.html",person=person)

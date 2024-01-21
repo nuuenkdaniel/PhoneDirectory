@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Update{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <h3 class="text-center">Update</h3>
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="{{ person[0] }}"/>
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="{{ person[1] }}"/>
+        <label for="email">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="{{ person[2] }}"/>
+        <label for="phone_number">Phone Number</label>
+        <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="{{ person[3] }}"/>
+        <label for="street_address">Street Address</label>
+        <input type="text" class="form-control" id="street_address" name="street_address" placeholder="{{ person[4] }}"/>
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" name="city" placeholder="{{ person[5] }}"/>
+        <label for="state">State</label>
+        <input type="text" class="form-control" id="state" name="state" placeholder="{{ person[6] }}"/>
+        <label for="zip">Zip</label>
+        <input type="number" class="form-control" id="zip" name="zip" placeholder="{{ person[7] }}"/>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock %}
