@@ -65,8 +65,19 @@ def delete(id):
     else:
         return "There was an error deleting"
 
-@views.route("/update/<results>")
+@views.route("/update/<results>", methods=["GET","POST"])
 def update(results):
+    if request.method == "POST":
+        email = request.form.get("email")
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        phone_number = request.form.get("phone_number")
+        street_address = request.form.get("street_address")
+        city = request.form.get("city")
+        state = request.form.get("state")
+        zipcode = request.form.get("zip")
+        update_person(first_name,last_name,phone_number,street_address,city,state,zipcode,email)
+        
     person = results[5:-2].split("', '")
     for i in range(0, len(person)):
         if(len(person[i]) == 0):
