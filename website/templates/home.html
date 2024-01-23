@@ -4,4 +4,38 @@
 
 {% block content %}
 <h1>Home</h1>
+<br>
+{% if data|length > 0 %}
+    <table class="table">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zipcode</th>
+            <th>Actions</th>
+        </tr>
+        {% for result in data %}
+            <tr>
+                {% for column in result[1:] %}
+                    {% if column|length > 0 %}
+                        <td>{{ column }}</td>
+                    {% else %}
+                        <td>n/a</td>
+                    {% endif %}
+                {% endfor %}
+                <td>
+                    <a href="/update/{{result}}">Update</a>
+                    <br>
+                    <a href="/delete/{{result[0]}}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <a href="/add-person">Add a person!</a>
+{% endif %}
 {% endblock %}

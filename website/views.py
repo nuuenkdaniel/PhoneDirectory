@@ -4,7 +4,9 @@ views = Blueprint("views",__name__)
 
 @views.route('/')
 def home():
-    return render_template("home.html")
+    from website.database import request_data
+    data = request_data()
+    return render_template("home.html", data=data)
 
 @views.route("/add-person", methods=["GET","POST"])
 def add_person():
@@ -19,6 +21,7 @@ def add_person():
         state = request.form.get("state")
         zipcode = request.form.get("zip")
         add_person(first_name,last_name,phone_number,street_address,city,state,zipcode,email)
+        return redirect(url_for("views.home"))
         
     return render_template("add_person.html")
 
@@ -61,7 +64,7 @@ def results():
 def delete(id):
     from website.database import delete_data
     if delete_data(id):
-        return redirect(url_for("views.results"))
+        return redirect(request.referrer)
     else:
         return "There was an error deleting"
 
@@ -77,6 +80,7 @@ def update(results):
         state = request.form.get("state")
         zipcode = request.form.get("zip")
         update_person(first_name,last_name,phone_number,street_address,city,state,zipcode,email)
+        return redirect(request.referrer)
         
     person = results[5:-2].split("', '")
     for i in range(0, len(person)):

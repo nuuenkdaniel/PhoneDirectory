@@ -114,10 +114,10 @@ def add_person(first_name,last_name,phone_number,street_address,city,state,zip,e
 
 def request_data():
     cursor_object = db.cursor()
-    sql = "SELECT phone_numbers.name,phone_numbers.number,emails.email,address.street_address,address.city,address.state,address.zip\
-        FROM phone_numbers\
-        INNER JOIN emails ON phone_numbers.name = emails.name\
-        INNER JOIN address ON phone_numbers.name = address.name"
+    sql = "SELECT info.id,info.first_name,info.last_name,contact_info.email,contact_info.phone_number,address.street_address,address.city,address.state,address.zipcode\
+        FROM info\
+        INNER JOIN contact_info ON info.id = contact_info.id\
+        INNER JOIN address ON contact_info.id = address.id"
     cursor_object.execute(sql)
     return cursor_object.fetchall()
 
