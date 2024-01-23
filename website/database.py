@@ -151,3 +151,18 @@ def delete_data(id):
     except mariadb.Error as err:
         print(f"Error deleting {id}: {err}")
         return False
+    
+def update_data(id,first_name,last_name,phone_number,street_address,city,state,zip,email):
+    cursor_object = db.cursor()
+    try:
+        sql = f"UPDATE info SET first_name = '{first_name}', last_name = '{last_name}' WHERE id = {id}"
+        cursor_object.execute(sql)
+        sql = f"UPDATE address SET street_address = '{street_address}', state = '{state}', city = '{city}', zipcode = '{zip}' WHERE id = {id}"
+        cursor_object.execute(sql)
+        sql = f"UPDATE contact_info SET phone_number = '{phone_number}', email = '{email}' WHERE id = {id}"
+        cursor_object.execute(sql)
+        db.commit()
+        return True
+    except mariadb.Error as err:
+        print(f"Error updating {id}: {err}")
+        return False

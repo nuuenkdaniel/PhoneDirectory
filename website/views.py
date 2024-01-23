@@ -69,7 +69,12 @@ def delete(id):
         return "There was an error deleting"
 
 @views.route("/update/<results>", methods=["GET","POST"])
+
 def update(results):
+    from website.database import update_data
+    i = 1
+    while results[i].isdigit():
+        i+=1
     if request.method == "POST":
         email = request.form.get("email")
         first_name = request.form.get("first_name")
@@ -79,12 +84,14 @@ def update(results):
         city = request.form.get("city")
         state = request.form.get("state")
         zipcode = request.form.get("zip")
-        update_person(first_name,last_name,phone_number,street_address,city,state,zipcode,email)
-        return redirect(request.referrer)
+        if update_data(results[1:i],first_name,last_name,phone_number,street_address,city,state,zipcode,email):
+            return redirect(request.referrer)
+        else:
+            return "There was an error updating"
         
-    person = results[5:-2].split("', '")
-    for i in range(0, len(person)):
-        if(len(person[i]) == 0):
-            person[i] = "n/a"
+    person = results[i+3:-2].split("', '")
+    for e in range(0, len(person)):
+        if(len(person[e]) == 0):
+            person[e] = "n/a"
     print(person)
     return render_template("update.html",person=person)
