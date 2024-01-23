@@ -119,6 +119,7 @@ def request_data():
         INNER JOIN contact_info ON info.id = contact_info.id\
         INNER JOIN address ON contact_info.id = address.id"
     cursor_object.execute(sql)
+    db.commit()
     return cursor_object.fetchall()
 
 def search(table,columns,filters):
@@ -133,6 +134,7 @@ def search(table,columns,filters):
         else:
             sql += " AND %s.%s = '%s'" % (table[i],columns[i],filters[i])
     cursor_object.execute(sql)
+    db.commit()
     return cursor_object.fetchall()
 
 def delete_data(id):
@@ -144,6 +146,7 @@ def delete_data(id):
         cursor_object.execute(sql)
         sql = f"DELETE FROM contact_info WHERE contact_info.id = {id}"
         cursor_object.execute(sql)
+        db.commit()
         return True
     except mariadb.Error as err:
         print(f"Error deleting {id}: {err}")
